@@ -14,7 +14,7 @@ end
 
 %[U, T] = get_temporder_problem(10, 3);
 
-for NN_No = 1:1
+parfor NN_No = 1:10
     %% Prepare data
     
     ntrain = 20000;
@@ -64,7 +64,7 @@ for NN_No = 1:1
     
     C = {};
         
-    for k = 1:2%000
+    for k = 1:2000
         tic
         srn_net = train_SGD_pak(srn_net, U1, T1, nlength, nminibatch, niterations, lr, mu, GR_ON);                
         
@@ -120,8 +120,17 @@ for NN_No = 1:1
     
     %save(sprintf('%s\\data_WS', out_path), 'C', 'esr_test', 'max_k');
     %save(sprintf('%s\\_accuracy_%1.2f', out_path, esr_test), 'esr_test');
-    dlmwrite('out.txt', [nlength, NN_No, esr_test]);
-end
+    
+    if (exist('out.txt'))
+      out = dlmread('out.txt');
+    else
+      out = [];
+    end
+    
+    out = [out;[nlength, NN_No, esr_test]];
+    
+    dlmwrite('out.txt', out);
+endparfor
 
 % close all;
 % plot(log10(e_array));
