@@ -63,8 +63,9 @@ for NN_No = 1:1
     best_mse_val = 100500;
     
     C = {};
-    
-    for k = 1:2000
+        
+    for k = 1:2%000
+        tic
         srn_net = train_SGD_pak(srn_net, U1, T1, nlength, nminibatch, niterations, lr, mu, GR_ON);                
         
         [Y2, ~, Z1_2, R1_2] = srnfwd(srn_net, U2, nlength);
@@ -80,7 +81,8 @@ for NN_No = 1:1
             best_srn_net = srn_net;
         end
         
-        fprintf('<strong>NN_No=%d k = %d, esr_val = %1.1f%%, mse_val = %f</strong>\n', NN_No, k, esr_val, mse_val);
+        t = toc;
+        fprintf('<strong>NN_No=%d k = %d, esr_val = %1.1f%%, mse_val = %f, t = %1.2f</strong>\n', NN_No, k, esr_val, mse_val, t);
         
         c.esr_train = esr_train;
         c.esr_val = esr_val;
@@ -107,6 +109,7 @@ for NN_No = 1:1
         C{k} = c;
         
         %save(sprintf('%s\\_curr_best_%1.2f', out_path, best_esr_val), 'best_esr_val');
+        
     end
     
     max_k = k - 1;

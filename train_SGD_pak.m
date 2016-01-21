@@ -29,31 +29,31 @@ for i = 1:niterations
     
     Q_factor = log10(norm_deltas_hidden_in_time(1)/norm_deltas_hidden_in_time(end));
     
-    %fprintf('i = %d, norm_deltas_start_log10 = %f', i, norm_deltas_start_log10);
+    %%fprintf('i = %d, norm_deltas_start_log10 = %f', i, norm_deltas_start_log10);
     
     %[curr_indicator, ~] = get_indicator_full(srn_net, mb_U, mb_T, nlength, nhidden, v_w1_rec, mu, lr);
     [curr_indicator_ST, ~] = get_indicator_STRAIGHTFORWARD(srn_net, mb_U, mb_T, nlength, v, mu, lr);
     
     if (GR_ON == 0)
-        fprintf('i = %d, start = %f, end = %f, Q = %f\n', i, norm_deltas_start_log10, norm_deltas_end_log10, Q_factor);
+        %fprintf('i = %d, start = %f, end = %f, Q = %f\n', i, norm_deltas_start_log10, norm_deltas_end_log10, Q_factor);
     else        
         if (abs(curr_indicator_ST) > 1)
-            fprintf(' continue, curr_indicator_ST = %f\n', curr_indicator_ST);
+            %fprintf(' continue, curr_indicator_ST = %f\n', curr_indicator_ST);
             continue;
         end
         
         if ((Q_factor < -1) && (curr_indicator_ST > 0))
-            fprintf(' make UP, start = %f, end = %f, Q = %f, curr_indicator_ST = %f\n', norm_deltas_start_log10, norm_deltas_end_log10, Q_factor, curr_indicator_ST);
+            %fprintf(' make UP, start = %f, end = %f, Q = %f, curr_indicator_ST = %f\n', norm_deltas_start_log10, norm_deltas_end_log10, Q_factor, curr_indicator_ST);
             continue;
         end
         
         if ((Q_factor > 1) && (curr_indicator_ST < 0))
-            fprintf(' make DOWN, start = %f, end = %f, Q = %f, curr_indicator_ST = %f\n', norm_deltas_start_log10, norm_deltas_end_log10, Q_factor, curr_indicator_ST);
+            %fprintf(' make DOWN, start = %f, end = %f, Q = %f, curr_indicator_ST = %f\n', norm_deltas_start_log10, norm_deltas_end_log10, Q_factor, curr_indicator_ST);
             continue;
         end
         
         ave = ave + curr_indicator_ST;        
-        fprintf('i = %d, start = %f, end = %f, Q = %f, curr_indicator_ST = %f, ave = %f\n', i, norm_deltas_start_log10, norm_deltas_end_log10, Q_factor, curr_indicator_ST, ave);        
+        %fprintf('i = %d, start = %f, end = %f, Q = %f, curr_indicator_ST = %f, ave = %f\n', i, norm_deltas_start_log10, norm_deltas_end_log10, Q_factor, curr_indicator_ST, ave);        
     end
     
     gw1_rec = reshape(gw(mark1 + 1:mark2), nhidden, nhidden);
