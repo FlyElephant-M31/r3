@@ -1,2 +1,2 @@
 #!/bin/sh
-octave -v | tee -a out.log
+octave -v | tee -a myfileres.txt
