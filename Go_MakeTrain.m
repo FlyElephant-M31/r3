@@ -38,10 +38,10 @@ parfor NN_No = 1:1
     %load(sprintf('SRN_%d_v02_010_WS', nlength));
     %load(sprintf('SRN_%d_v03_smart_WS', nlength));    
     
-    load(sprintf('nets_temporder\\SRN_%d_WS_v01.mat', nlength));       
+    load(sprintf('nets_temporder/SRN_%d_WS_v01.mat', nlength));       
     srn_net = srn_pure_array{NN_No};
     
-    out_path = sprintf('out_n%d_%s\\srn_%03d', nlength, status_str, NN_No);
+    out_path = sprintf('out_n%d_%s/srn_%03d', nlength, status_str, NN_No);
     mkdir(out_path);
     
   % [Y2, ~, Z1_2, R1_2] = srnfwd(srn_net, U2, nlength);    
