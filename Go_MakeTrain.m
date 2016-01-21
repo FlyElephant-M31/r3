@@ -121,15 +121,15 @@ parfor NN_No = 1:1
     %save(sprintf('%s\\data_WS', out_path), 'C', 'esr_test', 'max_k');
     %save(sprintf('%s\\_accuracy_%1.2f', out_path, esr_test), 'esr_test');
     
-    if (exist('out.txt'))
-      out = dlmread('out.txt');
+    if (exist('~/workdir/out.txt'))
+      out = dlmread('~/workdir/out.txt');
     else
       out = [];
     end
     
     out = [out;[nlength, NN_No, esr_test]];
     
-    dlmwrite('out.txt', out);
+    dlmwrite('~/workdir/out.txt', out);
 endparfor
 
 % close all;
