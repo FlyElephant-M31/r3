@@ -14,7 +14,7 @@ end
 
 %[U, T] = get_temporder_problem(10, 3);
 
-parfor NN_No = 1:4
+parfor NN_No = 1:1
     %% Prepare data
     
     ntrain = 20000;
