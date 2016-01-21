@@ -14,7 +14,7 @@ end
 
 %[U, T] = get_temporder_problem(10, 3);
 
-parfor NN_No = 1:10
+parfor NN_No = 1:2
     %% Prepare data
     
     ntrain = 20000;
@@ -38,16 +38,16 @@ parfor NN_No = 1:10
     %load(sprintf('SRN_%d_v02_010_WS', nlength));
     %load(sprintf('SRN_%d_v03_smart_WS', nlength));    
     
-    load(sprintf('nets_temporder\\SRN_%d_WS_v01.mat', nlength));       
+    load(sprintf('nets_temporder/SRN_%d_WS_v01.mat', nlength));       
     srn_net = srn_pure_array{NN_No};
     
-    out_path = sprintf('out_n%d_%s\\srn_%03d', nlength, status_str, NN_No);
+    out_path = sprintf('out_n%d_%s/srn_%03d', nlength, status_str, NN_No);
     mkdir(out_path);
     
   % [Y2, ~, Z1_2, R1_2] = srnfwd(srn_net, U2, nlength);    
 	% [f, norm_gw1_in_in_time, norm_gw1_rec_in_time, norm_deltas_hidden_in_time] = make_plot_gradients(srn_net, Y2, U2, Z1_2, R1_2, T2, nlength, 'off', '');
-	% saveas(f, sprintf('%s\\Gradients_%03d.jpg', out_path, 0));    
-  % save(sprintf('%s\\net_init_WS', out_path), 'srn_net');   
+	% saveas(f, sprintf('%s/Gradients_%03d.jpg', out_path, 0));    
+  % save(sprintf('%s/net_init_WS', out_path), 'srn_net');   
 
     %% Make train
     
@@ -64,7 +64,7 @@ parfor NN_No = 1:10
     
     C = {};
         
-    for k = 1:2000
+    for k = 1:2%000
         tic
         srn_net = train_SGD_pak(srn_net, U1, T1, nlength, nminibatch, niterations, lr, mu, GR_ON);                
         
@@ -92,8 +92,8 @@ parfor NN_No = 1:10
         if (mod(k, 1) == 0)
             %s = sprintf('mse=%f/%f, esr=%1.2f%%/%1.2f%%', mse_train, mse_val, esr_train, esr_val);            
             %[f, norm_gw1_in_in_time, norm_gw1_rec_in_time, norm_deltas_hidden_in_time] = make_plot_gradients(srn_net, Y2, U2, Z1_2, R1_2, T2, nlength, 'off', s);
-            %saveas(f, sprintf('%s\\Gradients_%04d.jpg', out_path, k));
-            %save(sprintf('%s\\srn_net_%04d_WS', out_path, k), 'srn_net');
+            %saveas(f, sprintf('%s/Gradients_%04d.jpg', out_path, k));
+            %save(sprintf('%s/srn_net_%04d_WS', out_path, k), 'srn_net');
             
             %fprintf('k = %d, esr_train = %1.1f%%, esr_val = %1.1f%%, mse_train = %f, mse_val = %f\n', k, esr_train, esr_val, mse_train, mse_val);
             
@@ -108,7 +108,7 @@ parfor NN_No = 1:10
         
         C{k} = c;
         
-        %save(sprintf('%s\\_curr_best_%1.2f', out_path, best_esr_val), 'best_esr_val');
+        %save(sprintf('%s/_curr_best_%1.2f', out_path, best_esr_val), 'best_esr_val');
         
     end
     
@@ -118,8 +118,8 @@ parfor NN_No = 1:10
     esr_test = error_classification(T3, Y3);
     esr_test
     
-    %save(sprintf('%s\\data_WS', out_path), 'C', 'esr_test', 'max_k');
-    %save(sprintf('%s\\_accuracy_%1.2f', out_path, esr_test), 'esr_test');
+    %save(sprintf('%s/data_WS', out_path), 'C', 'esr_test', 'max_k');
+    %save(sprintf('%s/_accuracy_%1.2f', out_path, esr_test), 'esr_test');
     
     if (exist('out.txt'))
       out = dlmread('out.txt');
